@@ -1,7 +1,4 @@
-# StakeBot
-
-===============
-Python StakeBot 0.0.4
+# Python StakeBot 0.0.4
 ===============
 
 A python library to send DMs
