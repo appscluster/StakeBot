@@ -10,6 +10,17 @@ r2 = fg(255)
 b = fg(31)
 w = fg(15)
 
+def load_env_args():
+    env_vars = {}
+    env_file = './.env'
+    with open(env_file) as f:
+        for line in f:
+            if line.startswith('#') or not line.strip():
+                continue
+            key, value = line.strip().split('=', 1)
+            env_vars[key] = value
+    return env_vars
+
 class DMAllBot: # Initialise the class
     def main(self): # Main function, holds the main code
         os.system('cls' if os.name == 'nt' else 'clear') # Clear the screen
@@ -17,27 +28,37 @@ class DMAllBot: # Initialise the class
         # time.sleep(2) # Wait a few seconds
         # self.slow_type(f"{r} [{w}+{r}] DMAllBot made by: {b}Drillenissen#4268{r} && {b}Benz#1001", .002) # Print who developed the code
         # time.sleep(1) # Wait a little more
-        self.slow_type(f"{r} [{w}?{r}] Input the Discord bot token: {b}", .002, newLine = False)
-        token = input("").strip() # Get the discord token
+        env_args = load_env_args()
+        # self.slow_type(f"{r} [{w}?{r}] Input the Discord bot token: {b}", .002, newLine = False)
+        # token = input("").strip() # Get the discord token
+        token = env_args['TOKEN']
+        print('TOKEN LOADED:', token)
+        print()
 
         self.slow_type(f"{r} [{w}?{r}] Input the message to post: {b}", .002, newLine = False) # Ask for a message to dm
         message = input("") # Wait for an awnser
-        self.slow_type(f"{r} [{w}?{r}] Do you wish yo use embeds? (Y/n): {b}", .002, newLine = False) # Ask for a message to dm
-        emb = input("") # Wait for an awnser
+        #self.slow_type(f"{r} [{w}?{r}] Do you wish yo use embeds? (Y/n): {b}", .002, newLine = False) # Ask for a message to dm
+        #emb = input("") # Wait for an awnser
+        data = None
 
+        '''
         if "y" in emb.lower(): # Check if "y" is in the responce 
             data = self.emb_setup() # Run the embed setup function
         else: # Otherwise
             data = None # Set the embed as None
+        '''
+        # self.slow_type(f"{r} [{w}?{r}] Set a cooldown ( Seconds ): {b}", .002, newLine = False) # Ask for a message to dm
+        # cooldown = float(input("")) # Wait for an awnser
 
-        self.slow_type(f"{r} [{w}?{r}] Set a cooldown ( Seconds ): {b}", .002, newLine = False) # Ask for a message to dm
-        cooldown = float(input("")) # Wait for an awnser
-
+        cooldown = env_args['COOLDOWN']
+        print()
+        print('COOLDOWN LOADED:', cooldown)
+        print()
 
         with open("data.json", "w") as josnFile: # Open the file used to pass data into the bot
             json.dump( # Dump the requed data
                 {
-                  "message" : f"{message}​",
+                  "message" : f"{message}?",
                   "embed" : data,
                   "cooldown" : cooldown
                 },

